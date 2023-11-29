@@ -1,0 +1,40 @@
+
+/* navbar */
+.navbar{
+    background-color: #F5F5F5;
+    border-radius: 1rem;
+}
+.navbar__title{
+    color: black;
+    text-decoration: none;
+}
+.navbar__dropdown-link{
+    text-decoration: none;
+}
+.btn-login{
+    border: none;
+    border-radius: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    color: white;
+    background-color: #FF6D0B;
+
+}
+.btn-logout{
+    border: none;
+    border-radius: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    color: white;
+    background-color: #FF6D0B;
+
+}
+
+.dropdown-menu{
+    min-width: 500px;
+}
+
