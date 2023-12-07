@@ -8,7 +8,7 @@
                 {{-- content perbandingan kriteria --}}
                 <div class="content container mt-5">
                     <h2 class="ui header">Perbandingan Kriteria</h2><br/>
-                    <form action=" " method="post">
+                    <form action="{{ route('prosesKriteria') }}" method="post">
                         @csrf
                         <table class="table table-striped table-hover table-light table-responsive text-center">
                             <thead>
@@ -64,11 +64,6 @@
                         <button type="submit" class="btn btn-success">Simpan Data</button>
                     </form>
 
-                    <div class="d-flex justify-content-between">
-                        <div></div>
-                        <a href="/alternatif" class="btn btn-primary mb-3 ml-auto">Lanjut -></a>
-                    </div>
-                        
                 </div>
                </section>
            </div>

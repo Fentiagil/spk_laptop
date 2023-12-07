@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KriteriaController;
 use App\Http\Controllers\AlternatifController;
 use App\Http\Controllers\PerbandinganKriteriaController;
+use App\Http\Controllers\PerbandinganAlternatifController;
 
 
 /*
@@ -59,11 +60,12 @@ Route::post('/storeAlternatif', [AlternatifController::class, 'store'])->name('s
 Route::delete('/deleteAlternatif/{id}', [AlternatifController::class, 'destroy'])->name('deleteAlternatif');
 
 Route::get('/perbandinganKriteria', [PerbandinganKriteriaController::class, 'index']);
-Route::post('/proses-perbandingan', [YourController::class, 'prosesPerbandingan'])->name('proses-perbandingan');
+Route::post('/prosesKriteria', [PerbandinganKriteriaController::class, 'prosesKriteria'])->name('prosesKriteria');
 
-Route::get('/perbandinganAlternatif', function () {
-    return view('admin/perbandinganAlternatif');
-});
+Route::get('/perbandinganAlternatif/{jenis}', [PerbandinganKriteriaController::class, 'indexA']);
+Route::get('/tabelPerbandingan/{jenis}/{kriteria}', [PerbandinganKriteriaController::class, 'showTabelPerbandingan']);
+Route::post('/prosesAlternatif', [PerbandinganKriteriaController::class, 'prosesAlternatif'])->name('prosesAlternatif');
+
 
 Route::get('/ranking', function () {
     return view('admin/ranking');

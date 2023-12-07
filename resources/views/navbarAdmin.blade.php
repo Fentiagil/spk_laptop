@@ -16,8 +16,27 @@
             <li class="nav-item ">
                 <a class="nav-link " href="/perbandinganKriteria" role="button" >Perbandingan Kriteria<i class="bi bi-chevron-right panah"></i></a>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link " href="/perbandinganAlternatif" role="button" >Perbandingan Alternatif<i class="bi bi-chevron-right panah"></i></a>
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Perbandingan Alternatif<i class="bi bi-chevron-right panah"></i>
+                </a>
+                @php                
+                    $getJumlahKriteria = (new \App\Http\Controllers\PerbandinganKriteriaController)->getJumlahKriteria();
+                @endphp
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    @if ( $getJumlahKriteria > 0)
+                        @for ($i=0; $i <= ($getJumlahKriteria-1); $i++)
+                        @php             
+                            $getKriteriaNama = (new \App\Http\Controllers\PerbandinganKriteriaController)->getKriteriaNama($i);
+                        @endphp
+                            <a class='item' href="{{ url('perbandinganAlternatif', ['jenis' => $i + 1]) }}">
+                                <li class="nav-link text-drp" style="text-decoration: none;">{{  $getKriteriaNama }}<hr></li>
+                            </a>
+                        @endfor
+                    @else
+                        <li><a class="dropdown-item" href="#">No criteria available</a></li>
+                    @endif
+                </ul>
             </li>
             <li class="nav-item ">
                 <a class="nav-link " href="/ranking" role="button" >Ranking</a>
