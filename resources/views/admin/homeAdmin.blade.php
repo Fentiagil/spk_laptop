@@ -7,7 +7,11 @@
                <section class="page-content container-fluid">
                 {{-- content home admin --}}
                    @yield('content')
-                   <p>ini admin</p>
+                   <div class="content container mt-5">
+                    <h1 class="ui header text-center">Selamat Datang Admin</h1><br/>
+                    <h3 class=" text-center">Sistem Pendukung Keputusan</h3><br/>
+                    <h5 class=" text-center">Metode AHP</h5><br/>
+                   </div>
                </section>
            </div>
 

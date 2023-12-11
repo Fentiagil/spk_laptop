@@ -6,7 +6,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Kriteria;
 use App\Models\Alternatif;
+use App\Models\Ranking;
 use App\Models\PerbandinganKriteria;
+use App\Models\PVKriteria; 
+use App\Models\PVAlternatif; 
 
 class PerbandinganKriteriaController extends Controller
 {
@@ -96,19 +99,64 @@ class PerbandinganKriteriaController extends Controller
         return view('admin.perbandinganAlternatif', compact('n', 'pilihan', 'jenis'));
     }
 
-    // public function showTabelPerbandingan($jenis,$kriteria) {
-    //     $jenis = request('jenis');
-    //     if ($kriteria == 'kriteria') {
-    //         $n = getJumlahKriteria();
-    //         $pilihan = $this->getListNamaPilihan('kriteria');
-    //     } else {
-    //         $n = getJumlahAlternatif();
-    //         $pilihan = $this->getListNamaPilihanA('alternatif');
-    //     }
+    public function indexR() {
+        $jmlAlternatif = $this->getJumlahAlternatif();
+        $jmlKriteria = $this->getJumlahKriteria();
+        $nilai = array();
+
+        // Mendapatkan nilai tiap alternatif
+        for ($x = 0; $x <= ($jmlAlternatif-1); $x++) {
+            // Inisialisasi
+            $nilai[$x] = 0;
+
+            for ($y = 0; $y <= ($jmlKriteria-1); $y++) {
+                $id_alternatif = $this->getAlternatifID($x);
+                $id_kriteria = $this->getKriteriaID($y);
+
+                $pv_alternatif	= $this->getAlternatifPV($id_alternatif,$id_kriteria);
+		        $pv_kriteria	= $this->getKriteriaPV($id_kriteria);
+
+                $nilai[$x] += ($pv_alternatif * $pv_kriteria);
+            }
+        }
+
+        // Update nilai ranking
+        for ($i = 0; $i <= ($jmlAlternatif-1); $i++) {
+            $id_alternatif = $this->getAlternatifID($i);
+
+            Ranking::updateOrInsert(
+                ['id_alternatif' => $id_alternatif],
+                ['nilai' => $nilai[$i]]
+            );
+        }
         
-    //     return view('admin.tabelPerbandingan', compact('jenis', 'kriteria', 'n', 'pilihan'));
-    // }
+
+        $results = Alternatif::join('ranking', 'alternatif.id', '=', 'ranking.id_alternatif')
+                ->orderBy('ranking.nilai', 'DESC')
+                ->select('alternatif.id', 'alternatif.nama', 'ranking.nilai')
+                ->get();
     
+        return view('admin.ranking', compact('jmlAlternatif', 'jmlKriteria', 'nilai', 'pv_kriteria', 'pv_alternatif', 'results' ));
+    }
+
+
+    public function getKriteriaPV($id_kriteria)
+    {
+        // mencari priority vector kriteria
+        $pvKriteria = PVKriteria::where('id_kriteria', $id_kriteria)->value('nilai');
+
+        return $pvKriteria;
+    }
+
+    public function getAlternatifPV($id_alternatif, $id_kriteria)
+    {
+        $pvAlternatif = PVAlternatif::where([
+            'id_alternatif' => $id_alternatif,
+            'id_kriteria'   => $id_kriteria,
+        ])->value('nilai');
+
+        return $pvAlternatif;
+    }
 
     public function getKriteriaID($no_urut) {
         try {
@@ -283,6 +331,10 @@ class PerbandinganKriteriaController extends Controller
     {
         $nama = $this->getListNamaPilihan('kriteria');
         $n = $this->getJumlahKriteria();
+
+        // memetakan nilai ke dalam bentuk matrik
+        // x = baris
+        // y = kolom
         $matrik = array();
         $urut = 0;
 
@@ -309,6 +361,7 @@ class PerbandinganKriteriaController extends Controller
             $matrik[$i][$i] = 1;
         }
 
+        // inisialisasi jumlah tiap kolom dan baris kriteria
         $jmlmpb = array();
         $jmlmnk = array();
 
@@ -317,6 +370,7 @@ class PerbandinganKriteriaController extends Controller
             $jmlmnk[$i] = 0;
         }
 
+        // menghitung jumlah pada kolom kriteria tabel perbandingan berpasangan
         for ($x = 0; $x <= ($n - 1); $x++) {
             for ($y = 0; $y <= ($n - 1); $y++) {
                 $value = $matrik[$x][$y];
@@ -324,6 +378,8 @@ class PerbandinganKriteriaController extends Controller
             }
         }
 
+        // menghitung jumlah pada baris kriteria tabel nilai kriteria
+	    // matrikb merupakan matrik yang telah dinormalisasi
         for ($x = 0; $x <= ($n - 1); $x++) {
             for ($y = 0; $y <= ($n - 1); $y++) {
                 $matrikb[$x][$y] = $matrik[$x][$y] / $jmlmpb[$y];
@@ -331,6 +387,7 @@ class PerbandinganKriteriaController extends Controller
                 $jmlmnk[$x] += $value;
             }
 
+            // nilai priority vektor
             $pv[$x] = $jmlmnk[$x] / $n;
 
             $id_kriteria = $this->getKriteriaID($x);
@@ -338,6 +395,7 @@ class PerbandinganKriteriaController extends Controller
 
         }
 
+        // cek konsistensi
         $eigenvektor = $this->getEigenVector($jmlmpb, $jmlmnk, $n);
         $consIndex = $this->getConsIndex($jmlmpb, $jmlmnk, $n);
         $consRatio = $this->getConsRatio($jmlmpb, $jmlmnk, $n);
@@ -464,8 +522,23 @@ class PerbandinganKriteriaController extends Controller
         $consIndex = $this->getConsIndex($jmlmpb, $jmlmnk, $n);
         $consRatio = $this->getConsRatio($jmlmpb, $jmlmnk, $n);
 
-        return view('admin.alternatif.output', 
-                    compact('eigenvektor', 'consIndex', 'consRatio', 'n', 'namaA', 'matrik', 'jmlmpb', 'matrikb', 'jmlmnk', 'pv','jenis'));   
+        // Check if $jenis is the last index
+        $lastIndex = $this->getJumlahAlternatif(); 
+
+        if ($jenis == $lastIndex) {
+            // Redirect to output page
+            return view('admin.alternatif.output', 
+                        compact('eigenvektor', 'consIndex', 'consRatio', 'n', 'namaA', 'matrik', 'jmlmpb', 'matrikb', 'jmlmnk', 'pv','jenis'));
+        } else {
+            // Increment $jenis to move to the next index
+            $nextIndex = $jenis + 1;
+
+            // Redirect to the next index
+            return redirect()->route('perbandinganAlternatif', ['jenis' => $nextIndex]);
+        }
+
+        // return view('admin.alternatif.output', 
+        //             compact('eigenvektor', 'consIndex', 'consRatio', 'n', 'namaA', 'matrik', 'jmlmpb', 'matrikb', 'jmlmnk', 'pv','jenis'));   
         
 
     }

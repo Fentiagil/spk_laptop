@@ -62,11 +62,7 @@ Route::delete('/deleteAlternatif/{id}', [AlternatifController::class, 'destroy']
 Route::get('/perbandinganKriteria', [PerbandinganKriteriaController::class, 'index']);
 Route::post('/prosesKriteria', [PerbandinganKriteriaController::class, 'prosesKriteria'])->name('prosesKriteria');
 
-Route::get('/perbandinganAlternatif/{jenis}', [PerbandinganKriteriaController::class, 'indexA']);
-Route::get('/tabelPerbandingan/{jenis}/{kriteria}', [PerbandinganKriteriaController::class, 'showTabelPerbandingan']);
+Route::get('/perbandinganAlternatif/{jenis}', [PerbandinganKriteriaController::class, 'indexA'])->name('perbandinganAlternatif');
 Route::post('/prosesAlternatif', [PerbandinganKriteriaController::class, 'prosesAlternatif'])->name('prosesAlternatif');
 
-
-Route::get('/ranking', function () {
-    return view('admin/ranking');
-});
+Route::get('/ranking', [PerbandinganKriteriaController::class, 'indexR']);
