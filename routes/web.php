@@ -65,4 +65,4 @@ Route::post('/prosesKriteria', [PerbandinganKriteriaController::class, 'prosesKr
 Route::get('/perbandinganAlternatif/{jenis}', [PerbandinganKriteriaController::class, 'indexA'])->name('perbandinganAlternatif');
 Route::post('/prosesAlternatif', [PerbandinganKriteriaController::class, 'prosesAlternatif'])->name('prosesAlternatif');
 
-Route::get('/ranking', [PerbandinganKriteriaController::class, 'indexR']);
+Route::get('/ranking', [PerbandinganKriteriaController::class, 'indexR'])->name('ranking');

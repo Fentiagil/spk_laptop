@@ -525,20 +525,8 @@ class PerbandinganKriteriaController extends Controller
         // Check if $jenis is the last index
         $lastIndex = $this->getJumlahAlternatif(); 
 
-        if ($jenis == $lastIndex) {
-            // Redirect to output page
-            return view('admin.alternatif.output', 
-                        compact('eigenvektor', 'consIndex', 'consRatio', 'n', 'namaA', 'matrik', 'jmlmpb', 'matrikb', 'jmlmnk', 'pv','jenis'));
-        } else {
-            // Increment $jenis to move to the next index
-            $nextIndex = $jenis + 1;
-
-            // Redirect to the next index
-            return redirect()->route('perbandinganAlternatif', ['jenis' => $nextIndex]);
-        }
-
-        // return view('admin.alternatif.output', 
-        //             compact('eigenvektor', 'consIndex', 'consRatio', 'n', 'namaA', 'matrik', 'jmlmpb', 'matrikb', 'jmlmnk', 'pv','jenis'));   
+        return view('admin.alternatif.output', 
+                    compact('eigenvektor', 'consIndex', 'consRatio', 'n', 'namaA', 'matrik', 'jmlmpb', 'matrikb', 'jmlmnk', 'pv','jenis', 'lastIndex'));  
         
 
     }

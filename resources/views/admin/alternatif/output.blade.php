@@ -102,7 +102,9 @@
                         <a href="javascript:history.back()" class="btn btn-danger mb-3 ml-auto"><- kembali</a>
                     @else
                         <br>
-                        <a href="/ranking" class="btn btn-primary mb-3 ml-auto">Lanjut -></a>
+                        <a href="{{ $jenis == $lastIndex ? url('ranking') : url('perbandinganAlternatif', [$jenis + 1]) }}" class="btn btn-primary mb-3 ml-auto">
+                            {{ $jenis == $lastIndex ? 'Ke Ranking' : 'Lanjut ->' }}
+                        </a>
                         <br> <br> <br> <br>
                     @endif
                 </div>
