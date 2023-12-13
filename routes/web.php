@@ -28,9 +28,7 @@ Route::post('/logout', [LoginController::class, 'logout']);
 
 Route::get('/dataLaptop', [AlternatifController::class, 'indexDataLaptop'])->name('indexDataLaptop');
 
-Route::get('/rekomendasiLaptop', function () {
-    return view('rekomendasiLaptop');
-});
+Route::get('/rekomendasiLaptop', [PerbandinganKriteriaController::class, 'indexRekomendasi'])->name('rekomendasiLaptop');
 
 Route::get('/about', function () {
     return view('about');

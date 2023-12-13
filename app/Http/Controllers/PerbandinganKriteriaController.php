@@ -139,6 +139,16 @@ class PerbandinganKriteriaController extends Controller
         return view('admin.ranking', compact('jmlAlternatif', 'jmlKriteria', 'nilai', 'pv_kriteria', 'pv_alternatif', 'results' ));
     }
 
+    public function indexRekomendasi() {
+
+        $results = Alternatif::join('ranking', 'alternatif.id', '=', 'ranking.id_alternatif')
+                ->orderBy('ranking.nilai', 'DESC')
+                ->select('alternatif.id', 'alternatif.nama', 'ranking.nilai')
+                ->get();
+    
+        return view('rekomendasiLaptop', compact('results' ));
+    }
+
 
     public function getKriteriaPV($id_kriteria)
     {

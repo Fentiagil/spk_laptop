@@ -44,7 +44,7 @@
                         </tfoot>
                     </table><br/><br/>
 
-                    <h2 class="ui header">Perangkingan</h2><br/>
+                    <h2 class="ui header">Perankingan</h2><br/>
                     <table class="table table-striped table-hover table-light table-responsive text-center">
                         <thead>
                             <tr>
