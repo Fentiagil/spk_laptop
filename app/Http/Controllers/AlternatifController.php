@@ -17,6 +17,13 @@ class AlternatifController extends Controller
         return view('admin.alternatif', ['data' => $data]);
     }
 
+    public function indexDataLaptop()
+    {
+        $data = Alternatif::orderBy('id', 'asc')->get();
+
+        return view('dataLaptop', ['data' => $data]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -29,10 +36,17 @@ class AlternatifController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+{
+    try {
         // Validasi data
         $request->validate([
             'nama' => 'required|string|max:50',
+            'layar' => 'required|string|max:50',
+            'prosesor' => 'required|string|max:50',
+            'RAM' => 'required|string|max:50',
+            'penyimpanan' => 'required|string|max:50',
+            'baterai' => 'required|string|max:10',
+            'harga' => 'required|int|max:5'
             // Tambahkan validasi untuk input lainnya jika diperlukan
         ]);
 
@@ -40,7 +54,12 @@ class AlternatifController extends Controller
         Alternatif::create($request->all());
 
         return redirect('/alternatif')->with('success', 'Data berhasil ditambahkan.');
+    } catch (\Exception $e) {
+        // Tangani kesalahan validasi atau kesalahan penyimpanan data
+        return redirect('/alternatif')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
     }
+}
+
 
     /**
      * Show the form for editing the specified resource.

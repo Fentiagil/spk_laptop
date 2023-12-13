@@ -22,6 +22,12 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
+                                <th>Layar</th>
+                                <th>Prosesor</th>
+                                <th>RAM</th>
+                                <th>Penyimpanan</th>
+                                <th>Baterai</th>
+                                <th>Harga/Juta</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -31,6 +37,13 @@
                                 <tr>
                                     <td>{{ $nomor++ }}</td>
                                     <td>{{ $item->nama }}</td>
+                                    <td>{{ $item->layar }}</td>
+                                    <td>{{ $item->prosesor }}</td>
+                                    <td>{{ $item->RAM }}</td>
+                                    <td>{{ $item->penyimpanan }}</td>
+                                    <td>{{ $item->baterai }}</td>
+                                    <td>{{ $item->harga }}</td>
+
                                     <td>
                                         <a href="{{ route('editAlternatif', ['id' => $item->id]) }}" class="btn btn-primary">Edit</a>
                                         <form action="{{ route('deleteAlternatif', ['id' => $item->id]) }}" method="post" style="display:inline;">

@@ -7,16 +7,18 @@
                <section class="page-content container-fluid">
                 <div class="container mt-5">
                     <h2>Tambah Data Kriteria</h2>
-                    <form action="{{ route('storeKriteria') }}" method="post">
-                        @csrf
-            
-                        <div class="form-group">
-                            <label for="nama">Nama</label>
-                            <input type="text" class="form-control" id="nama" name="nama" required>
-                        </div><br/>
-            
-                        <button type="submit" class="btn btn-primary">Simpan Data</button>
-                    </form>
+                    <div class="create-container">
+                        <form action="{{ route('storeKriteria') }}" method="post">
+                            @csrf
+                
+                            <div class="form-group">
+                                <label for="nama">Nama</label>
+                                <input type="text" class="form-control" id="nama" name="nama" required>
+                            </div><br/>
+                
+                            <button type="submit" class="btn btn-primary">Simpan Data</button>
+                        </form> 
+                    </div>
                 </div>
                </section>
            </div>

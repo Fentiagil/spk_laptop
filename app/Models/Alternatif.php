@@ -9,6 +9,6 @@ class Alternatif extends Model
 {
     //use HasFactory;
     protected $table = 'alternatif';
-    protected $fillable = ['id', 'nama']; 
+    protected $fillable = ['id', 'nama', 'layar', 'prosesor', 'RAM', 'penyimpanan', 'baterai', 'harga']; 
     public $timestamps = false;
 }

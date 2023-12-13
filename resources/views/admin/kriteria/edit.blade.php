@@ -7,6 +7,7 @@
                <section class="page-content container-fluid">
                 <div class="container mt-5">
                     <h2>Edit Data Kriteria</h2>
+                    <div class="create-container">
                     <form action="{{ route('updateKriteria', ['id' => $kriteria->id]) }}" method="post">
                         @csrf
                         @method('PUT')
@@ -18,6 +19,7 @@
             
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>
+                    </div>
                 </div>
                </section>
            </div>
