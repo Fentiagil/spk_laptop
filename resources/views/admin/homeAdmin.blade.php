@@ -6,12 +6,17 @@
            <div class="content">
                <section class="page-content container-fluid">
                 {{-- content home admin --}}
-                   @yield('content')
-                   <div class="content container mt-5">
-                    <h1 class="ui header text-center">Selamat Datang Admin</h1><br/>
-                    <h3 class=" text-center">Sistem Pendukung Keputusan</h3><br/>
-                    <h5 class=" text-center">Metode AHP</h5><br/>
-                   </div>
+                <div class="row hero">
+                    <div class="col">
+                        <img src="assets/img/admin.png" alt="logo admin" width="400px">
+                    </div>
+                    <div class="col">
+                        <h1><b>Selamat Datang Admin !</b></h1>
+                        <h2><b>Sistem Pendukung Keputusan Pemilihan Laptop</b></h2>
+                        <p>Sistem ini menggunakan metode Analytical Hierarchy Process (AHP)</p>
+                        <a class="btn-pesan" href='/kriteria' role="button">Mulai</a>
+                    </div>
+                </div>
                </section>
            </div>
 

@@ -5,6 +5,22 @@
     padding-bottom: 3rem;
 }
 
+.hero-contact{
+    padding-left: 10rem;
+    padding-right: 10rem;
+    padding-bottom: 3rem;
+}
+
+.section-contact{
+    background-color: #ffffff;
+    padding: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 450px;
+}
+
 .btn-pesan{
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -14,4 +30,5 @@
     color: black;
     background-color: white;
     border-radius: 1.5rem;
+    text-decoration: none;
 }

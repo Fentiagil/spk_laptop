@@ -6,6 +6,7 @@ use App\Http\Controllers\KriteriaController;
 use App\Http\Controllers\AlternatifController;
 use App\Http\Controllers\PerbandinganKriteriaController;
 use App\Http\Controllers\PerbandinganAlternatifController;
+use App\Http\Controllers\LoginController;
 
 
 /*
@@ -21,9 +22,9 @@ use App\Http\Controllers\PerbandinganAlternatifController;
 
 Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/login', function () {
-    return view('login');
-});
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout']);
 
 Route::get('/dataLaptop', function () {
     return view('dataLaptop');
@@ -43,7 +44,7 @@ Route::get('/contact', function () {
 
 Route::get('/homeAdmin', function () {
     return view('admin/homeAdmin');
-});
+})->name('homeAdmin');
 
 Route::get('/kriteria', [KriteriaController::class, 'index'])->name('indexKriteria');
 Route::get('/editKriteria/{id}', [KriteriaController::class, 'edit'])->name('editKriteria');
