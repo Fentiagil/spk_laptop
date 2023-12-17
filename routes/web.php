@@ -26,18 +26,6 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout']);
 
-Route::get('/dataLaptop', [AlternatifController::class, 'indexDataLaptop'])->name('indexDataLaptop');
-
-Route::get('/rekomendasiLaptop', [PerbandinganKriteriaController::class, 'indexRekomendasi'])->name('rekomendasiLaptop');
-
-Route::get('/about', function () {
-    return view('about');
-});
-
-Route::get('/contact', function () {
-    return view('contact');
-});
-
 Route::get('/homeAdmin', function () {
     return view('admin/homeAdmin');
 })->name('homeAdmin');

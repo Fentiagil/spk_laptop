@@ -17,13 +17,6 @@ class AlternatifController extends Controller
         return view('admin.alternatif', ['data' => $data]);
     }
 
-    public function indexDataLaptop()
-    {
-        $data = Alternatif::orderBy('id', 'asc')->get();
-
-        return view('dataLaptop', ['data' => $data]);
-    }
-
     /**
      * Show the form for creating a new resource.
      */
